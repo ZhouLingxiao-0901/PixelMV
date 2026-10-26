@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>刻在我心底的名字 · 动态分镜 V2</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <p class="eyebrow">16-BIT MEMORY FILM · 真实音轨 · LRC 同步</p>
+          <h1>刻在我心底的名字 <span class="title-tail">动态分镜 V2</span></h1>
+        </div>
+      </div>
+      <div class="head-right">
+        <span class="badge">ANIMATIC V2 · 歌词驱动重构</span>
+        <span class="head-meta">640 × 360 · 05:25</span>
+      </div>
+    </header>
+
+    <main class="player">
+      <div class="stage" id="stage">
+        <canvas id="screen" width="640" height="360" aria-label="《刻在我心底的名字》动态分镜 V2"></canvas>
+        <button id="fs-exit" class="fs-exit" type="button" hidden>退出全屏</button>
+        <div id="loading" class="loading">正在载入真实音轨、LRC 歌词与分镜场景…</div>
+      </div>
+
+      <section class="transport" aria-label="播放控制">
+        <div class="controls">
+          <button id="play" class="btn primary" type="button" aria-pressed="false">播放</button>
+          <button id="replay" class="btn" type="button">重播</button>
+
+          <div class="beat-now">
+            <span id="current-beat">序 · 雨夜 / 名字悬念</span>
+            <span id="audio-status" class="audio-status">真实音轨 · 待播放</span>
+          </div>
+
+          <div class="timecode" aria-live="off">
+            <span id="time-now">00:00.0</span>
+            <span class="time-sep">/</span>
+            <span id="time-total">05:25.0</span>
+          </div>
+
+          <button id="list-toggle" class="btn" type="button" aria-pressed="false">分镜列表</button>
+          <button id="fs" class="btn" type="button">全屏</button>
+        </div>
+
+        <div class="chapter-strip" id="chapter-strip" aria-label="分镜章节"></div>
+
+        <div class="scrub-row">
+          <input id="scrub" class="scrub" type="range" min="0" max="325" step="0.01" value="0" aria-label="播放进度">
+        </div>
+      </section>
+
+      <section id="scene-drawer" class="scene-drawer" hidden>
+        <div class="drawer-head">
+          <div>
+            <h2>段落 / 歌词节点与内部镜头</h2>
+            <p>V2 以歌词句意为剪辑依据；音乐节点仍为候选范围。每个段落内含多个景别镜头，所有角色表演仍为临时动态分镜，不是最终逐帧动画。</p>
+          </div>
+          <span class="drawer-total">总长 05:25 · 音轨结束 05:20.2</span>
+        </div>
+        <div id="scene-list" class="scene-list"></div>
+      </section>
+
+      <section class="hints" aria-label="键盘快捷键">
+        <span><kbd>空格</kbd> 播放 / 暂停</span>
+        <span><kbd>←</kbd><kbd>→</kbd> 前后 5 秒</span>
+        <span><kbd>Shift</kbd> + <kbd>←</kbd><kbd>→</kbd> 前后 1 秒</span>
+        <span><kbd>Home</kbd><kbd>End</kbd> 开头 / 结尾</span>
+        <span><kbd>R</kbd> 重播</span>
+        <span><kbd>F</kbd> 全屏</span>
+        <span><kbd>L</kbd> 分镜列表</span>
+        <span><kbd>D</kbd> 调试信息</span>
+      </section>
+
+      <footer class="footnote">
+        <p>本页播放真实 MP3、运行时读取的原 LRC 歌词，以及临时动态分镜。歌结束后留有一段静默，最后只出现一句「珍惜那些在你生命中的名字」。</p>
+        <p class="footnote-muted">V2 新增雨夜霓虹、车窗、站台、鞋与手等程序化像素镜头；角色与旧场景复用现有素材。歌词显示层有 +0.08 秒偏移，源 MP3 / LRC 未修改。尚未完成逐帧角色表演。</p>
+      </footer>
+    </main>
+  </div>
+
+  <audio id="audio" src="../assets/audio/卢广仲 - 刻在我心底的名字.mp3" preload="auto"></audio>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

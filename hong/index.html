@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b090c">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230b090c'/%3E%3Crect x='6' y='6' width='20' height='20' fill='%23b8433e'/%3E%3Crect x='10' y='10' width='12' height='3' fill='%23f2d7c2'/%3E%3Crect x='10' y='16' width='12' height='3' fill='%23f2d7c2'/%3E%3C/svg%3E">
+  <title>红 · 罗言 — A Pixel Music Film</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <main id="player" class="player">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">红</span>
+        <div class="brand-text">
+          <span class="brand-title">红</span>
+          <span class="brand-sub">罗言 · A PIXEL MUSIC FILM</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="venue">影院 · 最后一场</span>
+        <button id="chaptersBtn" class="ghost-button" type="button" aria-haspopup="dialog" aria-controls="chapterDrawer">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 4h10M3 8h10M3 12h7"/></svg>
+          章节
+        </button>
+        <button id="infoBtn" class="ghost-button" type="button" aria-haspopup="dialog" aria-controls="infoDrawer">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M8 7v5M8 4.4v.2"/></svg>
+          关于
+        </button>
+      </div>
+    </header>
+
+    <section class="stage-shell" aria-label="《红》像素音乐影像">
+      <div class="stage" id="stage">
+        <canvas id="screen" width="640" height="360" aria-label="《红》音乐影像画面"></canvas>
+
+        <div id="loading" class="overlay loading" role="status" aria-live="polite">
+          <div class="reel" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p class="overlay-kicker">影院 · 放映室</p>
+          <p id="loadingLabel" class="overlay-title">正在装片</p>
+          <div class="load-track" aria-hidden="true"><i id="loadBar"></i></div>
+          <p id="loadingNote" class="overlay-note">读取本地音轨与歌词</p>
+        </div>
+
+        <div id="startScreen" class="overlay start hidden">
+          <div class="start-card">
+            <p class="overlay-kicker">影院 · 最后一场</p>
+            <h1>红</h1>
+            <p class="start-credit">罗言 · A PIXEL MUSIC FILM</p>
+            <button id="startBtn" class="primary-button" type="button">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l8-4.5z"/></svg>
+              开始放映
+            </button>
+            <p id="startNote" class="overlay-note">建议佩戴耳机 · 可全屏观看</p>
+            <p class="start-warning">本片故事为原创虚构，并非歌手真实经历。</p>
+          </div>
+        </div>
+
+        <div id="endHint" class="end-hint hidden">
+          <span>放映结束</span>
+          <button id="replayEndBtn" type="button">重映</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="transport" aria-label="播放控制">
+      <div class="transport-main">
+        <button id="playBtn" class="play-button" type="button" aria-label="播放">
+          <svg class="icon-play" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.2v11.6L16 10z"/></svg>
+          <svg class="icon-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg>
+        </button>
+        <div class="timecode">
+          <span id="curTime">0:00</span>
+          <span class="time-sep">/</span>
+          <span id="durTime">2:42</span>
+        </div>
+        <div class="seek-wrap">
+          <input id="seek" class="seek" type="range" min="0" max="161.585" step="0.01" value="0" aria-label="播放进度">
+        </div>
+        <span id="actLabel" class="act-label">序 · 放映前</span>
+        <div class="transport-actions">
+          <button id="muteBtn" class="icon-button" type="button" aria-label="静音">
+            <svg class="icon-sound" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 7h3l4-3v10l-4-3H3zM12 6.3c1.1.9 1.1 4.5 0 5.4M14 4.5c2.1 1.8 2.1 7.2 0 9"/></svg>
+            <svg class="icon-muted" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 7h3l4-3v10l-4-3H3zM12 7l4 4M16 7l-4 4"/></svg>
+          </button>
+          <input id="volume" class="volume" type="range" min="0" max="1" step="0.01" value="0.9" aria-label="音量">
+          <button id="fullBtn" class="icon-button" type="button" aria-label="全屏">
+            <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 7V3h4M11 3h4v4M15 11v4h-4M7 15H3v-4"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="transport-sub">
+        <span id="shotLabel" class="shot-label">p01 · 片头 · 放映员计数</span>
+        <span class="key-hint">空格 播放 / 暂停 · ← → 5 秒 · C 章节 · F 全屏 · D 调试</span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>原创同人影像 · 基于歌曲情绪与歌词意象 · 非官方 MV</p>
+      <p>音乐与歌词版权归原权利人所有</p>
+    </footer>
+  </main>
+
+  <div id="scrim" class="scrim" hidden></div>
+
+  <aside id="chapterDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="chapterTitle" hidden>
+    <div class="drawer-head">
+      <div>
+        <p class="drawer-kicker">EDIT DECISION LIST</p>
+        <h2 id="chapterTitle">章节与镜头</h2>
+      </div>
+      <button class="drawer-close" type="button" data-close="chapterDrawer" aria-label="关闭">×</button>
+    </div>
+    <ol id="chapterList" class="chapter-list"></ol>
+    <div class="shot-head">
+      <span>本幕镜头</span>
+      <span id="shotActLabel">序 · 放映前</span>
+    </div>
+    <ol id="shotList" class="shot-list"></ol>
+    <p class="drawer-foot">镜头表来自 <code>js/timeline.js</code>，时间轴可独立修改。</p>
+  </aside>
+
+  <aside id="infoDrawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="infoTitle" hidden>
+    <div class="drawer-head">
+      <div>
+        <p class="drawer-kicker">ABOUT THE FILM</p>
+        <h2 id="infoTitle">关于《红》</h2>
+      </div>
+      <button class="drawer-close" type="button" data-close="infoDrawer" aria-label="关闭">×</button>
+    </div>
+    <div class="info-body">
+      <p class="info-lead">一部以罗言《红》为声音与情绪底稿的原创像素音乐影像。</p>
+
+      <h3>歌曲</h3>
+      <p>《红》，罗言演唱，收录于专辑《When the world is came，take it！》（2022）。本片使用项目内本地音频与 LRC，时长约 2 分 42 秒。</p>
+
+      <h3>故事</h3>
+      <p>海边小城的一家老影院里，放映员苏棠与声音采集师沈野相遇。他们相爱，也分别在“留下”和“出去”之间做了自认为正确的选择。红是影院座椅、票根、围巾和霓虹，也是那些没有说出口的话。</p>
+
+      <h3>创作边界</h3>
+      <p>我们未找到罗言本人关于这首歌创作背景的可靠一手说明。公开可核对的信息主要是演唱、词曲署名和发行资料；网络上关于“红”是某位故人名字、以及相关病情等说法，来自二手文章或网友叙述，缺少可核实的来源。因此，本片不复述歌手经历，也不把传闻写成事实；人物、对白与情节均为基于歌词意象的原创虚构。</p>
+
+      <h3>制作</h3>
+      <p>640 × 360 原生分辨率，纯 Canvas 2D 程序化像素绘制，无外部图片素材。音频驱动主时钟，歌词按 LRC 实际时间显示。分镜、场景、角色与播放引擎相互分离。</p>
+
+      <h3>操作</h3>
+      <dl class="key-list">
+        <dt>空格</dt><dd>播放 / 暂停</dd>
+        <dt>← →</dt><dd>后退 / 前进 5 秒</dd>
+        <dt>J L</dt><dd>后退 / 前进 10 秒</dd>
+        <dt>C</dt><dd>章节与镜头表</dd>
+        <dt>F</dt><dd>全屏</dd>
+        <dt>D</dt><dd>调试信息</dd>
+        <dt>M</dt><dd>静音</dd>
+        <dt>R</dt><dd>重映</dd>
+      </dl>
+
+      <p class="info-note">本片为非商业同人习作，音乐与歌词版权归原权利人所有。若喜欢这首歌，请支持正版。</p>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <audio id="audio" preload="auto" playsinline></audio>
+
+  <noscript>本片需要启用 JavaScript。</noscript>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

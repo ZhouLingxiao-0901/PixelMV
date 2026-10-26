@@ -1,0 +1,18 @@
+# 版权素材：音频、歌词与导出视频不随仓库发布
+export/
+assets/audio/
+hong/assets/audio/
+*.mp3
+*.ncm
+*.lrc
+*.mp4
+*.webm
+*.wav
+
+# Python
+__pycache__/
+*.py[cod]
+
+# 编辑器
+.vscode/
+.idea/
