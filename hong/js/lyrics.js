@@ -2,7 +2,7 @@
  *
  * The LRC is read from the local project file and never rewritten.  The
  * source begins with three production-credit lines at the same timestamp as
- * the first lyric, plus a short parenthetical translation of "For tonight".
+ * the first lyric, plus a short parenthetical translation of the English hook.
  * Credits are filtered out; parenthetical translations are attached to the
  * preceding line as an optional sub-line instead of being counted as a sung
  * phrase.

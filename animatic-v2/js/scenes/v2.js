@@ -1913,10 +1913,10 @@ export function createV2Scenes(assets) {
           fill(ctx, PAL.warm, 0, 0, W, H);
           ctx.globalAlpha = 1;
         } else if (t < 17.797) {
-          // "握着飞向天空的钥匙" lands on the key itself.
+          // The lyric closes on the key itself.
           drawKeyPalm(ctx, t - 14.136);
         } else if (t < 22.224) {
-          // "你继续翱翔 还有我为你坚持": he keeps walking, she is elsewhere.
+          // He keeps walking, she is elsewhere.
           drawNeonCity(ctx, t, {
             pan: 110 + t * 15,
             adultX: 282,
